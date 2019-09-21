@@ -28,7 +28,10 @@ public class JedisClientBeanPostProcessor implements BeanPostProcessor,Environme
 
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         if(bean instanceof Jedis){
+            // 通过beanName获取到namespace
             String prefix = beanName.substring(0, beanName.indexOf(Jedis.class.getSimpleName()));
+            // 获取配置文件的配置，配置的规则为： namespace + "." + jedis. + address|port
+            // 示例：demo.jedis.url.address = 127.0.0.1
             String addressKey = prefix + "." + JEDIS_ADDRESS_PREFIX;
             String address = environment.getProperty(addressKey);
             Assert.isTrue(!StringUtils.isEmpty(address),String.format("%s can not be null!!! value = %s",addressKey,address));
