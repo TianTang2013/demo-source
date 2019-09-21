@@ -7,7 +7,7 @@
 
 
 ### Spring相关的Demo源码
-* 
+* 模块`spring-demo1` 是自定义`@EnableJedisClient`和`@EnableJedisClusterClient`组件的源码
 
 ### Thread相关的Demo源码
 > 别急，菜鸟正在努力中！！！
