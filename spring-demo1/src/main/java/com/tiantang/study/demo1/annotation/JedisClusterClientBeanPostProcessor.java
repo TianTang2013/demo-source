@@ -18,8 +18,8 @@ import redis.clients.jedis.JedisPoolConfig;
 public class JedisClusterClientBeanPostProcessor implements BeanPostProcessor,EnvironmentAware {
 
     private static String JEDIS_ADDRESS_PREFIX = "jedis.cluster.address";
-    private static String JEDIS_MIN_IDEL_PREFIX = "jedis.cluster.minIdel";
-    private static String JEDIS_MAX_IDEL_PREFIX = "jedis.cluster.maxIdel";
+    private static String JEDIS_MIN_IDLE_PREFIX = "jedis.cluster.minIdle";
+    private static String JEDIS_MAX_IDLE_PREFIX = "jedis.cluster.maxIdle";
     private static String JEDIS_MAX_TOTAL_PREFIX = "jedis.cluster.maxTotal";
 
     private Environment environment;
@@ -34,11 +34,11 @@ public class JedisClusterClientBeanPostProcessor implements BeanPostProcessor,En
 
             // 可以从配置文件中获取到redis的maxIdle、maxTotal、minIdle等配置，然后封装到poolConfig中
             JedisPoolConfig poolConfig = new JedisPoolConfig();
-            Integer minIdel = environment.getRequiredProperty(namespace + "." + JEDIS_MIN_IDEL_PREFIX, Integer.class);
-            Integer maxIdel = environment.getRequiredProperty(namespace + "." + JEDIS_MAX_IDEL_PREFIX, Integer.class);
+            Integer minIdle = environment.getRequiredProperty(namespace + "." + JEDIS_MIN_IDLE_PREFIX, Integer.class);
+            Integer maxIdle = environment.getRequiredProperty(namespace + "." + JEDIS_MAX_IDLE_PREFIX, Integer.class);
             Integer maxTotal = environment.getRequiredProperty(namespace + "." + JEDIS_MAX_TOTAL_PREFIX, Integer.class);
-            poolConfig.setMinIdle(minIdel);
-            poolConfig.setMaxIdle(maxIdel);
+            poolConfig.setMinIdle(minIdle);
+            poolConfig.setMaxIdle(maxIdle);
             poolConfig.setMaxTotal(maxTotal);
             // TODO 还有其他的一些属性，也可以在这儿设置
             JedisClusterClient jedisClusterClient = new JedisClusterClient(address,poolConfig);
